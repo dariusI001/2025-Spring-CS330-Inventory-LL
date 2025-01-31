@@ -96,7 +96,7 @@ public class Inventory
      */
     public boolean isFull()
     {
-        return this.slots.currentSize == capacity;
+        return this.utilizedSlots() == this.capacity;
     }
 
     /**
@@ -124,7 +124,7 @@ public class Inventory
         // Add the necessary sequential search loop
         while(it != null) {
             if (it.data.equals(key)) {
-                return key;
+                return it.data;
             }
             it = it.next;
         } 
@@ -144,12 +144,11 @@ public class Inventory
             this.slots.head = newNode;
             this.slots.tail = newNode;
             this.slots.currentSize = 1;
-            newNode = null;
+        } else {
+            this.slots.tail.next = newNode;
+            this.slots.tail = newNode;
         }
-        this.slots.tail.next = newNode;
-        this.slots.tail = this.slots.tail.next;
-        
-        ++this.slots.currentSize;
+        this.slots.currentSize++;
         // Use the appendNode/add logic from Review 1 as your starting point
         // Once we reach this function... we know that `toAdd` must be stored
 
