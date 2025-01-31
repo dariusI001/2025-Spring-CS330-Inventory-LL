@@ -143,7 +143,6 @@ public class Inventory
         if (this.slots.head == null) {
             this.slots.head = newNode;
             this.slots.tail = newNode;
-            this.slots.currentSize = 1;
         } else {
             this.slots.tail.next = newNode;
             this.slots.tail = newNode;
