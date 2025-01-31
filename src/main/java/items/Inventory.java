@@ -13,6 +13,7 @@ import containers.LinkedList;
  */
 public class Inventory
 {
+    
     /**
      * This is the Default Inventory size.
      */
@@ -27,9 +28,11 @@ public class Inventory
      */
     public static void mergeStacks(ItemStack lhs, ItemStack rhs)
     {
+
         // lhs needs to have items added to it.
         // rhs's size is needed
         // lhs.????(rhs.????)
+        lhs.addItems(rhs.size());
     }
 
     /**
@@ -93,8 +96,7 @@ public class Inventory
      */
     public boolean isFull()
     {
-        // Replace the next line
-        return false;
+        return this.slots.currentSize == capacity;
     }
 
     /**
@@ -117,10 +119,18 @@ public class Inventory
      */
     public ItemStack findMatchingItemStack(ItemStack key)
     {
-        // Add the necessary sequential search loop
+        LinkedList.Node<ItemStack> it = this.slots.head;
 
-        return null;
-    }
+        // Add the necessary sequential search loop
+        while(it != null) {
+            if (it.data.equals(key)) {
+                return key;
+            }
+            it = it.next;
+        } 
+            return null;
+        }
+
 
     /**
      * This is the standard Linked List append operation from Review 01
@@ -130,9 +140,19 @@ public class Inventory
     public void addItemStackNoCheck(ItemStack toAdd)
     {
         LinkedList.Node<ItemStack> newNode = new LinkedList.Node<>(toAdd);
-
+        if (this.slots.head == null) {
+            this.slots.head = newNode;
+            this.slots.tail = newNode;
+            this.slots.currentSize = 1;
+            newNode = null;
+        }
+        this.slots.tail.next = newNode;
+        this.slots.tail = this.slots.tail.next;
+        
+        ++this.slots.currentSize;
         // Use the appendNode/add logic from Review 1 as your starting point
         // Once we reach this function... we know that `toAdd` must be stored
+
     }
 
     /**
